@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/screens/home/home_page.dart';
+import 'package:my_portfolio/components/resources/theme.dart';
+import 'package:my_portfolio/components/route/router.dart';
+import 'package:my_portfolio/components/route/routes.dart';
+import 'package:my_portfolio/components/utils/custom_scroll_behaviour.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const EbukaIhekwaba());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class EbukaIhekwaba extends StatelessWidget {
+  const EbukaIhekwaba({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ihekwaba Ebuka`s portfolio',
+      title: 'quabiee',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: false,
-      ),
-      home: const HomePage(),
+      scrollBehavior: AppScrollBehavior(),
+      initialRoute: Routes.home,
+      onGenerateRoute: RouteGenerator.generateRoute,
+      theme: theme(),
     );
   }
 }

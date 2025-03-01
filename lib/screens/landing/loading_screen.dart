@@ -5,7 +5,7 @@ import 'package:my_portfolio/components/animations/fade_animation.dart';
 import 'package:my_portfolio/components/resources/vectors.dart';
 
 import 'package:animate_do/animate_do.dart';
-import 'package:my_portfolio/screens/home/home_page.dart';
+import 'package:my_portfolio/screens/home/home_page_desktop.dart';
 import 'package:page_transition/page_transition.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -59,7 +59,7 @@ class _LoadingScreenState extends State<LoadingScreen>
             context,
             PageTransition(
               type: PageTransitionType.fade,
-              child: const HomePage(),
+              child: const HomePageDesktop(),
             ),
           );
         }

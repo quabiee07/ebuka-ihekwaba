@@ -5,30 +5,32 @@ class Fonts {
   static const itim = 'Itim';
 }
 
-TextStyle itimBold({double size = 14, Color color = black}) {
+TextStyle itimBold({double size = 14, Color color = black,  double? height}) {
   return TextStyle(
       fontFamily: Fonts.itim,
       fontSize: size,
       fontWeight: FontWeight.w700,
+      height: height,
       color: color);
 }
 
 ///When [fontWeight] is [FontWeight.w500] or [FontWeight.w600] use this text style
-TextStyle itimMedium({double size = 14, Color color = black}) {
+TextStyle itimMedium({double size = 14, Color color = black, double? height}) {
   return TextStyle(
       fontFamily: Fonts.itim,
       fontSize: size,
       fontWeight: FontWeight.w500,
-    
+      height: height,
       color: color);
 }
 
 ///When [fontWeight] is [400] use this widget for text style
-TextStyle itim({double size = 14, Color color = black}) {
+TextStyle itim({double size = 14, Color color = black, double? height}) {
   return TextStyle(
       fontFamily: Fonts.itim,
       fontSize: size,
-      fontWeight: FontWeight.normal,
+      fontWeight: FontWeight.w400,
+      height: height,
       color: color);
 }
 

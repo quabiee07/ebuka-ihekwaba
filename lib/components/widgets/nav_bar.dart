@@ -12,7 +12,7 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  List<String> navItems = ['About', 'Skills', 'Projects', 'Contact Me'];
+  List<String> navItems = ['About', 'Skills', 'Projects', 'Contact'];
   int hoveredIndex = -1;
   @override
   Widget build(BuildContext context) {

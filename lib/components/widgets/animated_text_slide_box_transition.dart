@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'animated_slide_box.dart';
+// /// credit to [https://davidcobbina.com] for his amazing work 👏🏻👏🏻
+// /// One of the coolest animations i've ever seen!
 
-/// credit to [https://davidcobbina.com] for his amazing work 👏🏻👏🏻
-/// One of the coolest animations i've seen
+import 'package:flutter/material.dart';
+import 'package:my_portfolio/components/widgets/animated_slide_box.dart';
+
 class AnimatedTextSlideBoxTransition extends StatefulWidget {
   const AnimatedTextSlideBoxTransition({
     super.key,
@@ -111,7 +112,8 @@ class _AnimatedTextSlideBoxTransitionState
   }
 
   void setTextWidthAndHeight() {
-    size = widget.text.textSize(
+    size = textSize(
+      text: widget.text,
       style: widget.textStyle,
       maxWidth: widget.width,
       maxLines: widget.maxLines,
@@ -125,11 +127,11 @@ class _AnimatedTextSlideBoxTransitionState
     return SizedBox(
       height: textHeight,
       child: Stack(
-        children: <Widget>[
+        children: [
           AnimatedSlideBox(
             controller: widget.controller,
             height: textHeight,
-            width: textWidth,
+            width: textWidth + 30,
             coverColor: widget.coverColor,
             boxColor: widget.boxColor,
             visibleBoxAnimation: visibleAnimation,
@@ -137,11 +139,15 @@ class _AnimatedTextSlideBoxTransitionState
           ),
           PositionedTransition(
             rect: textPositionAnimation,
-            child: Text(
-              widget.text,
-              style: widget.textStyle,
-              textAlign: widget.textAlign,
-              maxLines: widget.maxLines,
+            child: SizedBox(
+              width: textWidth + 20,
+              child: Text(
+                widget.text,
+                style: widget.textStyle,
+                textAlign: widget.textAlign,
+                maxLines: widget.maxLines,
+                overflow: TextOverflow.visible,
+              ),
             ),
           ),
         ],
@@ -150,17 +156,16 @@ class _AnimatedTextSlideBoxTransitionState
   }
 }
 
-extension StringEx on String {
-  Size textSize({
-    required TextStyle? style,
-    int maxLines = 1,
-    double maxWidth = double.infinity,
-  }) {
-    final TextPainter textPainter = TextPainter(
-        text: TextSpan(text: this, style: style),
-        maxLines: maxLines,
-        textDirection: TextDirection.ltr)
-      ..layout(minWidth: 0, maxWidth: maxWidth);
-    return textPainter.size;
-  }
+Size textSize({
+  required String text,
+  required TextStyle? style,
+  int maxLines = 1,
+  double maxWidth = double.infinity,
+}) {
+  final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      maxLines: maxLines,
+      textDirection: TextDirection.ltr)
+    ..layout(minWidth: 0, maxWidth: maxWidth);
+  return textPainter.size;
 }

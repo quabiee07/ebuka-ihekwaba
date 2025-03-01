@@ -7,4 +7,5 @@ const green = Color(0xFF01CC65);
 const accent = Color(0xFFB9E31B);
 const yellow = Color(0xFFFEE145);
 const textGrey = Color(0xFF8A8A8A);
+const complimentary = Color(0xFF451BE3);
 

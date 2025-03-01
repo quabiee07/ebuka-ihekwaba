@@ -1,11 +1,11 @@
+
 import 'package:flutter/material.dart';
 
-/// credit to [https://davidcobbina.com] for his amazing artwork 👏🏻👏🏻
 const double hiddenFactor = 2.0;
 
 class AnimatedSlideBox extends AnimatedWidget {
   const AnimatedSlideBox({
-    Key? key,
+    super.key,
     required this.controller,
     required this.height,
     required this.width,
@@ -13,11 +13,10 @@ class AnimatedSlideBox extends AnimatedWidget {
     this.invisibleBoxAnimation,
     this.boxColor = Colors.black,
     this.coverColor = Colors.transparent,
-    this.isVertical = false,
     this.visibleBoxCurve = Curves.fastOutSlowIn,
     this.invisibleBoxCurve = Curves.fastOutSlowIn,
-  }) : super(key: key, listenable: controller);
-  final bool isVertical;
+  }) : super(listenable: controller);
+
   final AnimationController controller;
   final double height;
   final double width;
@@ -30,9 +29,7 @@ class AnimatedSlideBox extends AnimatedWidget {
 
   Animation<double> get visibleAnimation =>
       visibleBoxAnimation ??
-      Tween<double>(
-              begin: 0, end: isVertical ? height : width - (hiddenFactor * 2))
-          .animate(
+      Tween<double>(begin: 0, end: width - (hiddenFactor*2)).animate(
         CurvedAnimation(
           parent: controller,
           curve: Interval(0, 0.5, curve: visibleBoxCurve),
@@ -40,38 +37,41 @@ class AnimatedSlideBox extends AnimatedWidget {
       );
 
   Animation<double> get invisibleAnimation =>
-      Tween<double>(begin: 0, end: isVertical ? height : width).animate(
+      Tween<double>(begin: 0, end: width).animate(
         CurvedAnimation(
           parent: controller,
           curve: Interval(0.5, 1.0, curve: invisibleBoxCurve),
         ),
       );
 
+
+  
   @override
   Widget build(BuildContext context) {
+    // in this animation, we first animation a black container and later followed by a white box.
+    // but because the height and width for both boxes are the same, 
+    // we can still see a small part of the black box after the animation
+    // to remedy this, i use the variable hidden factor to offset the black box 
+    // so that it will be totally hidden by the white box
     return SizedBox(
-      height: height,
       width: width,
+      height: height,
       child: Stack(
         children: [
           Positioned(
             top: hiddenFactor,
             left: hiddenFactor,
             child: Container(
-              width: isVertical
-                  ? width - (hiddenFactor * 2)
-                  : visibleAnimation.value,
-              height: isVertical
-                  ? visibleAnimation.value
-                  : height - (hiddenFactor * 2),
+              width: visibleAnimation.value,
+              height: height - (hiddenFactor * 2),
               color: boxColor,
             ),
           ),
           Positioned(
             top: 0,
             child: Container(
-              width: isVertical ? width : invisibleAnimation.value,
-              height: isVertical ? invisibleAnimation.value : height,
+              width: invisibleAnimation.value,
+              height: height ,
               color: coverColor,
             ),
           ),

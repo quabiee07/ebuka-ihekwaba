@@ -48,6 +48,7 @@ class _MarqueeWidgetState extends State<MarqueeWidget> {
         child: ListView.builder(
           controller: _controller,
           scrollDirection: Axis.horizontal,
+          physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             final asset = widget.assets[index % widget.assets.length];
             return SvgPicture.asset(

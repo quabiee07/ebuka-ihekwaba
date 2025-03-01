@@ -15,7 +15,7 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+  <base href="/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -28,33 +28,118 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/png" href="head.svg" />
 
-  <title>my_portfolio</title>
+  <title>quabiee.io</title>
   <link rel="manifest" href="manifest.json">
+  <script type="application/javascript">
+    function openLink(url, target, isAsync = false) {
+      var is_safari = /^(?!.*chrome).*safari/i.test(navigator.userAgent.toLowerCase());
+      if (is_safari && isAsync) {
+        window.location.href = url;
+      } else {
+        window.open(url, target);
+      }
+    }
+  </script>
 
   <script>
     // The value below is injected by flutter build, do not touch.
     var serviceWorkerVersion = "{{flutter_service_worker_version}}";
+    // var serviceWorkerVersion = null;
   </script>
   <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
+  <script src="https://unpkg.com/canvaskit-wasm@0.37.1/bin/canvaskit.js"></script>
+  <link rel="preload" href="https://unpkg.com/canvaskit-wasm@0.37.1/bin/canvaskit.wasm" as="fetch"
+    crossOrigin="anonymous">
+
+  <script src="flutter_bootstrap.js" async></script>
+
+  <style>
+    html {
+      background: #B9E31B;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #icon {
+      margin: auto;
+      display: block;
+    }
+
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      -moz-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+    }
+
+    .loading-label {
+      font-size: 18px;
+      font-weight: normal;
+      text-align: center;
+      font-style: normal;
+      color: black;
+      animation-name: changing;
+      animation-duration: 2.0s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease;
+      font-family: 'Itim', sans-serif;
+    }
+
+    @keyframes changing {}
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+  <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
 </head>
 
 <body>
+  <div class="loading" id="loader">
+    <lord-icon id="icon" src="https://cdn.lordicon.com/fmpamzwr.json" trigger="loop"
+      colors="primary:#000000,secondary:#ffc738,tertiary:#f24c00" style="width:200px;height:200px">
+    </lord-icon>
+    <p class="loading-label"></p>
+  </div>
   <script>
+    const texts = [
+      "Rendering patience in ultra-HD...",
+      "Hold tight! Even the Flash takes breaks...",
+      "Summoning pixels from the void...",
+      "Calculating the meaning of life... please wait.",
+      "Almost there... or are we just getting started?",
+    ];
+
+    const element = document.querySelector('p.loading-label');
+    let i = 0;
+    const listener = e => {
+      i = i < texts.length - 1 ? i + 1 : 0;
+      element.innerHTML = texts[i];
+    };
+    element.innerHTML = texts[0];
+    element.addEventListener('animationiteration', listener, false);
+
     window.addEventListener('load', function (ev) {
       // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
+      _flutter.loader.load({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
         onEntrypointLoaded: function (engineInitializer) {
+          const loader = document.getElementById('loading');
           engineInitializer.initializeEngine().then(function (appRunner) {
+            // Hide the loading indicator when the app is ready
+            loader.remove();
             appRunner.runApp();
           });
         }
       });
+
     });
   </script>
 </body>
